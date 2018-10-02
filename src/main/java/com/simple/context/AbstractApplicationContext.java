@@ -1,13 +1,12 @@
 package com.simple.context;
 
+import com.simple.context.config.support.DefaultResourceLoader;
 import com.simple.core.io.Resource;
 import com.simple.factory.BeanFactory;
 import com.simple.factory.support.DefaultBeanFactory;
 import com.simple.factory.support.XMLBeanDefinitionReader;
 
-import java.io.InputStream;
-
-public abstract class ApplicationContext implements BeanFactory {
+public abstract class AbstractApplicationContext extends DefaultResourceLoader implements BeanFactory {
 
     private DefaultBeanFactory beanFactory;
 

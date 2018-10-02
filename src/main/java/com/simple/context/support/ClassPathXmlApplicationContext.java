@@ -1,10 +1,10 @@
 package com.simple.context.support;
 
-import com.simple.context.ApplicationContext;
+import com.simple.context.AbstractApplicationContext;
 import com.simple.core.io.ClassPathResource;
 import com.simple.core.io.Resource;
 
-public class ClassPathXmlApplicationContext extends ApplicationContext {
+public class ClassPathXmlApplicationContext extends AbstractApplicationContext {
 
     private String rescource;
 
