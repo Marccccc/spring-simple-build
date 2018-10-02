@@ -17,7 +17,6 @@ public class DefaultResourceLoader implements ResourceLoader {
         this.classLoader = classLoader;
     }
 
-
     @Override
     public ClassLoader getClassLoader() {
         return this.classLoader != null ? this.classLoader : ClassUtils.getDefaultClassLoader();
@@ -30,7 +29,7 @@ public class DefaultResourceLoader implements ResourceLoader {
 
     @Override
     public Resource getResource(String location) {
-        return new ClassPathResource(location.substring("classpath:".length()), this.getClassLoader());
+        return new ClassPathResource(location, this.getClassLoader());
     }
 
 }

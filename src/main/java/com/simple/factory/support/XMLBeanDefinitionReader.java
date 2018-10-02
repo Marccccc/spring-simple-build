@@ -5,6 +5,7 @@ import com.simple.core.io.Resource;
 import com.simple.exception.BeanStoreException;
 import com.simple.factory.BeanDefinitionRegistry;
 import com.simple.util.ClassUtils;
+import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
@@ -24,7 +25,6 @@ public class XMLBeanDefinitionReader {
     }
 
     public void loadBeanDefinition(BeanDefinitionRegistry beanDefinitionRegistry) {
-
         try {
             InputStream inputStream = resource.getInputStream();
             SAXReader saxReader = new SAXReader();
@@ -35,7 +35,13 @@ public class XMLBeanDefinitionReader {
                 Element beanElement = beanIterator.next();
                 String id = beanElement.attribute("id").getValue();
                 String className = beanElement.attribute("class").getValue();
-                BeanDefinition beanDefinition = new BeanDefinition(id, className);
+                Attribute scope = beanElement.attribute("scope");
+                BeanDefinition beanDefinition = null;
+                if (scope != null) {
+                    beanDefinition = new BeanDefinition(id, className, scope.getValue());
+                } else {
+                    beanDefinition = new BeanDefinition(id, className, BeanDefinition.SCOPE_DEFAULT);
+                }
                 beanDefinitionRegistry.registryBeanDefinition(beanDefinition);
             }
         } catch (Exception e) {

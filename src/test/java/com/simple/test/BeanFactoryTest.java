@@ -1,6 +1,7 @@
 package com.simple.test;
 
 import com.simple.bean.BeanDefinition;
+import com.simple.context.config.support.DefaultResourceLoader;
 import com.simple.core.io.ClassPathResource;
 import com.simple.exception.BeanCreationException;
 import com.simple.exception.BeanStoreException;
@@ -20,7 +21,7 @@ public class BeanFactoryTest {
 
     @Before
     public void loadBean() {
-        beanFactory = new DefaultBeanFactory();
+        beanFactory = new DefaultBeanFactory(new DefaultResourceLoader());
         xmlBeanReader = new XMLBeanDefinitionReader(new ClassPathResource("application.xml"));
         xmlBeanReader.loadBeanDefinition(beanFactory);
     }
@@ -57,6 +58,45 @@ public class BeanFactoryTest {
             return;
         }
         fail();
+    }
+
+
+    /**
+     * 测试单例唯一
+     */
+    @Test
+    public void testSingletonOnlyBean() {
+        try {
+            beanFactory.registrySingleton("companyService", new CompanyService());
+        } catch (BeanCreationException e) {
+            return;
+        }
+        fail();
+
+    }
+
+
+    /**
+     * 测试单例生成的是单例
+     */
+    @Test
+    public void testSingletonBean() {
+        CompanyService companyService1 = (CompanyService) beanFactory.getBean("companyService");
+        CompanyService companyService2 = (CompanyService) beanFactory.getBean("companyService");
+        assertEquals(companyService1, companyService2);
+    }
+
+
+    /**
+     * 测试多实例
+     */
+    @Test
+    public void testPrototypeBean() {
+        BeanDefinition beanDefinition = new BeanDefinition("companyServiceTest", "com.simple.service.CompanyService", BeanDefinition.SCOPE_PROTOTYPE);
+        beanFactory.registryBeanDefinition(beanDefinition);
+        CompanyService companyService1 = (CompanyService) beanFactory.getBean("companyServiceTest");
+        CompanyService companyService2 = (CompanyService) beanFactory.getBean("companyServiceTest");
+        assertNotEquals(companyService1, companyService2);
     }
 
 }

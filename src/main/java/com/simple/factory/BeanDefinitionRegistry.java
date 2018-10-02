@@ -1,6 +1,7 @@
 package com.simple.factory;
 
 import com.simple.bean.BeanDefinition;
+import com.simple.context.config.ResourceLoader;
 
 /**
  * Bean定义的注册接口
