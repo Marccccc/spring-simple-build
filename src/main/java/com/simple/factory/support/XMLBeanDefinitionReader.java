@@ -1,6 +1,7 @@
 package com.simple.factory.support;
 
 import com.simple.bean.BeanDefinition;
+import com.simple.core.io.Resource;
 import com.simple.exception.BeanStoreException;
 import com.simple.factory.BeanDefinitionRegistry;
 import com.simple.util.ClassUtils;
@@ -16,20 +17,16 @@ import java.util.Iterator;
  */
 public class XMLBeanDefinitionReader {
 
-    private String resource;
+    private Resource resource;
 
-    public XMLBeanDefinitionReader(String resource) {
+    public XMLBeanDefinitionReader(Resource resource) {
         this.resource = resource;
     }
 
     public void loadBeanDefinition(BeanDefinitionRegistry beanDefinitionRegistry) {
 
-        if (resource == null || "".equals(resource)) {
-            throw new BeanStoreException(resource);
-        }
-
         try {
-            InputStream inputStream = ClassUtils.getDefaultClassLoader().getResourceAsStream(resource);
+            InputStream inputStream = resource.getInputStream();
             SAXReader saxReader = new SAXReader();
             Document document = saxReader.read(inputStream);
             Element rootElement = document.getRootElement();
@@ -42,7 +39,7 @@ public class XMLBeanDefinitionReader {
                 beanDefinitionRegistry.registryBeanDefinition(beanDefinition);
             }
         } catch (Exception e) {
-            throw new BeanStoreException(resource);
+            throw new BeanStoreException(resource.getDescribe());
         }
 
     }

@@ -1,6 +1,7 @@
 package com.simple.test;
 
 import com.simple.bean.BeanDefinition;
+import com.simple.core.io.ClassPathResource;
 import com.simple.exception.BeanCreationException;
 import com.simple.exception.BeanStoreException;
 import com.simple.factory.BeanFactory;
@@ -20,7 +21,7 @@ public class BeanFactoryTest {
     @Before
     public void loadBean() {
         beanFactory = new DefaultBeanFactory();
-        xmlBeanReader = new XMLBeanDefinitionReader("application.xml");
+        xmlBeanReader = new XMLBeanDefinitionReader(new ClassPathResource("application.xml"));
         xmlBeanReader.loadBeanDefinition(beanFactory);
     }
 
@@ -40,7 +41,7 @@ public class BeanFactoryTest {
     @Test
     public void testBeanStoreException() {
         try {
-            xmlBeanReader = new XMLBeanDefinitionReader("test-load-fail.xml");
+            xmlBeanReader = new XMLBeanDefinitionReader(new ClassPathResource("test-load-fail.xml"));
             xmlBeanReader.loadBeanDefinition(beanFactory);
         } catch (BeanStoreException e) {
             return;

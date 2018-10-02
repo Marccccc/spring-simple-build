@@ -1,5 +1,6 @@
 package com.simple.core.io;
 
+import com.simple.exception.BeanStoreException;
 import com.simple.util.ClassUtils;
 
 import java.io.InputStream;
@@ -15,6 +16,9 @@ public class ClassPathResource implements Resource {
     }
 
     public ClassPathResource(String resource, ClassLoader classLoader) {
+        if (resource == null || "".equals(resource)) {
+            throw new BeanStoreException(resource);
+        }
         this.resource = resource;
         this.classLoader = classLoader != null ? classLoader : ClassUtils.getDefaultClassLoader();
     }
