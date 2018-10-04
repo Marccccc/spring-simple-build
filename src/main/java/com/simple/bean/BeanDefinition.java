@@ -1,42 +1,22 @@
 package com.simple.bean;
 
+import java.util.List;
+
 /**
  * 容器内的Bean定义
  */
-public class BeanDefinition {
+public interface BeanDefinition {
 
-    public final static String  SCOPE_SINGLETON = "singleton";
-    public final static String  SCOPE_PROTOTYPE = "prototype";
-    public final static String  SCOPE_DEFAULT = SCOPE_SINGLETON;
+    String getName();
 
-    private String name;
-    private String className;
-    private String scope;
+    String getClassName();
 
-    public BeanDefinition(String name, String className,String scope) {
-        this.name = name;
-        this.className = className;
-        this.scope = scope;
-    }
+    String getScope();
 
-    public String getName() {
-        return name;
-    }
+    Boolean isSingleton();
 
-    public String getClassName() {
-        return className;
-    }
+    Boolean isPrototype();
 
-    public String getScope() {
-        return scope;
-    }
-
-    public Boolean isSingleton(){
-        return scope.equals(SCOPE_SINGLETON);
-    }
-
-    public Boolean isPrototype(){
-        return scope.equals(SCOPE_PROTOTYPE);
-    }
+    List<PropertyDefinition> getPropertyValues();
 
 }

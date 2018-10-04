@@ -1,6 +1,7 @@
 package com.simple.test;
 
 import com.simple.bean.BeanDefinition;
+import com.simple.bean.GenericBeanDefinition;
 import com.simple.context.config.support.DefaultResourceLoader;
 import com.simple.core.io.ClassPathResource;
 import com.simple.exception.BeanCreationException;
@@ -92,7 +93,7 @@ public class BeanFactoryTest {
      */
     @Test
     public void testPrototypeBean() {
-        BeanDefinition beanDefinition = new BeanDefinition("companyServiceTest", "com.simple.service.CompanyService", BeanDefinition.SCOPE_PROTOTYPE);
+        BeanDefinition beanDefinition = new GenericBeanDefinition("companyServiceTest", "com.simple.service.CompanyService", GenericBeanDefinition.SCOPE_PROTOTYPE);
         beanFactory.registryBeanDefinition(beanDefinition);
         CompanyService companyService1 = (CompanyService) beanFactory.getBean("companyServiceTest");
         CompanyService companyService2 = (CompanyService) beanFactory.getBean("companyServiceTest");

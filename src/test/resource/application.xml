@@ -5,6 +5,14 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="companyService" class="com.simple.service.CompanyService">
+        <property name="companyDao" ref="companyDao"></property>
+        <property name="employeeDao" ref="employeeDao"></property>
+    </bean>
+
+    <bean id="companyDao" class="com.simple.dao.CompanyDao">
+    </bean>
+
+    <bean id="employeeDao" class="com.simple.dao.EmployeeDao">
     </bean>
 
 </beans>
